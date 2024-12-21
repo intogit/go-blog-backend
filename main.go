@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/intogit/go-blog-backend/handlers"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -20,10 +22,18 @@ func main() {
 	if portString == "" {
 		log.Fatal("PORT is not found in environment")
 	}
-	fmt.Println("PORT is", portString)
-	// http.HandleFunc("/healthCheck", handleHealthCheck)
-	// http.HandleFunc("/createUser", handleCreateUser)
-	// log.Fatal(http.ListenAndServe(":"+ portString, nil))
+	dbURL := os.Getenv("DB_URL")
+	if dbURL == "" {
+		log.Fatal("DB_URL is not found in environment")
+	}
+	conn, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		log.Fatal("Cannot connect to database: ", err)
+	}
+	handlers.NewConn(conn)
+
+	// defer conn.Close()
+	conn.SetConnMaxIdleTime(15 * 1000 * 1000 * 1000) // 15 second
 
 	router := chi.NewRouter()
 	router.Use(cors.Handler(cors.Options{
@@ -36,7 +46,7 @@ func main() {
 	}))
 
 	log.Println("Server started at port", portString)
-	err := http.ListenAndServe(":"+portString, handlers.CreateRoute())
+	err = http.ListenAndServe(":"+portString, handlers.CreateRoute())
 	if err != nil {
 		log.Fatal(err)
 	}

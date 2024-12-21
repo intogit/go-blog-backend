@@ -19,6 +19,7 @@ func CreateRoute() *chi.Mux {
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			r.Get("/healthcheck", HandleHealthCheck)
+			r.Post("/createUser", HandleCreateUser)
 		})
 		r.Route("/v2", func(r chi.Router) {
 			r.Get("/healthcheck", HandleHealthCheck)
