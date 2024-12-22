@@ -1,12 +1,13 @@
---  name: CreateUser :one
-INSERT INTO users (id, created_at, updated_at, name)
-VALUES ($1, $2, $3, $4)
+-- name: CreateUser :one
+INSERT INTO users (user_id, created_at, updated_at, user_name, api_key)
+VALUES ($1, $2, $3, $4, encode(sha256(random()::text::bytea), 'hex'))
 RETURNING *;
+
+-- name: GetUserByApiKey :one
+select * from users where api_key = $1;
 
 -- // -- name: GetUsers :many
 -- // select * from users
 
--- // -- name: GetUserById :one
--- // select * from users where id = $1
 -- // -- name: DeleteUser :one
 -- // -- name: UpdateUser :one

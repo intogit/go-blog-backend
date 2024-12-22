@@ -20,6 +20,11 @@ func CreateRoute() *chi.Mux {
 		r.Route("/v1", func(r chi.Router) {
 			r.Get("/healthcheck", HandleHealthCheck)
 			r.Post("/createUser", HandleCreateUser)
+			r.Get("/getUserByApiKey", HandleGetUserByApiKey)
+			r.Post("/createFeed", HandleCreateFeed)
+			r.Post("/createFeedFollow", HandleCreateFeedFollow)
+			r.Get("/getAllFeedFollow", HandleGetAllFeedFollow)
+			r.Delete("/deleteFeedFollow/{feed_follow_id}", HandleDeleteFeedFollow)
 		})
 		r.Route("/v2", func(r chi.Router) {
 			r.Get("/healthcheck", HandleHealthCheck)

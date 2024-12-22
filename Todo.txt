@@ -1,0 +1,8 @@
+// TODO [handleFeedFollows.go]:
+	// when we try to delete in sql and query condition doesn't holds true,
+	// it deletes nothing from db, but returns success query execution
+	// due to this we do not get to know if it really deleted the record...
+	// so that's why we need to count the pre-delete records and post-delete records
+	// and if they are equal, means no delete happend and we can send err to client
+
+
