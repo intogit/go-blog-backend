@@ -1,5 +1,5 @@
 # Project Overview
-This project is a RESTful API implemented in Go, designed to support user management, feed creation, and feed-follow functionality using PostgreSQL as the database. The project is structured into multiple phases to implement core features incrementally.
+This project is a RESTful API implemented in Go, designed to support user management, blog feed creation, and blog feed-follow functionality using PostgreSQL as the database. The project is structured into multiple phases to implement core features incrementally.
 
 ---
 
